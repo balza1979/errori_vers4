@@ -333,8 +333,24 @@ function selezionaFoglio(nomeFoglio, bottone) {
   caricaExcel(nomeFoglio);
 }
 
+<!-- ⚡ MODALE HTML - DEVE ESSERE PRIMA DELLO SCRIPT -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <button id="chiudiModal" class="close-btn">CHIUDI</button>
+    <textarea id="modalText" readonly></textarea>
+  </div>
+</div>
+
+<script>
+function selezionaFoglio(nomeFoglio, bottone) {
+  document.querySelectorAll(".tab-button").forEach(btn => btn.classList.remove("active"));
+  bottone.classList.add("active");
+  caricaExcel(nomeFoglio);
+}
+
 caricaExcel("errori");
-// 🔥 MODALE FULLSCREEN
+
+// 🔥 MODALE FULLSCREEN — ORA FUNZIONA PERCHÈ È DOPO L’HTML DELLA MODALE
 const modal = document.getElementById("modal");
 const modalText = document.getElementById("modalText");
 const chiudiModal = document.getElementById("chiudiModal");
@@ -349,20 +365,14 @@ modal.onclick = e => {
 
 // Apre la modale quando clicchi un campo
 ["menuDettaglio", "campoB", "campoC", "campoD"].forEach(id => {
-  document.getElementById(id).onclick = function() {
+  const el = document.getElementById(id);
+  if (!el) return; // Evita errori se un ID non esiste
+  el.onclick = function() {
     modalText.value = this.value;
     modal.style.display = "block";
   };
 });
-
-  
 </script>
-  <!-- 🔥 MODALE FULLSCREEN PER LE DESCRIZIONI -->
-<div id="modal" class="modal">
-  <div class="modal-content">
-    <button id="chiudiModal" class="close-btn">CHIUDI</button>
-    <textarea id="modalText" readonly></textarea>
-  </div>
-</div>
+
 </body>
 </html>
