@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>ELMI – Errori</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Libreria XLSX corretta -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background: #000;   /* ← SFONDO NERO */
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    font-family: Arial, sans-serif;
+  }
+
+  .home-button {
+    position: fixed;
+    font-size: 20px;
+    top: 5px;
+    right: 5px;
+    background-color: #d9534f;
+    color: white;
+    padding: 6px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    transition: background-color 0.2s ease;
+    z-index: 999;
+  }
+
+  .home-button:hover {
+    background-color: #c9302c;
+  }
+
+  header {
+    background: #b91c1c;
+    color: white;
+    padding: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+  }
+
+.tab-bar {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    padding: 10px;
+    margin-top: 2px;  /* molto più vicino */
+}
+
+}
+.tab-button {
+  background: #d1d5db;       /* grigio chiaro */
+  color: #000;
+  padding: 12px 26px;
+  font-size: 16px;
+  border: none;
+  border-radius: 25px;       /* TONDEGGIANTE */
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.tab-button:hover {
+  background: #bfc3c9;       /* grigio hover */
+}
+
+.tab-button.active {
+  background: #d9534f;       /* ROSSO */
+  color: white;
+  transform: scale(1);        /* NON cambia dimensione */
+}
+
+  .container {
+    max-width: 600px;
+    margin: 40px auto;
+    background-color: transparent !important;
+    padding: 30px;
+    border-radius: 12px;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+  }
+
+  label {
+    font-weight: bold;
+    display: block;
+    margin-top: 20px;
+    font-size: 26px;
+    color: red;
+  }
+
+  select, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 6px;
+    border-radius: 6px;
+    border: 1px solid #9ca3af;
+    font-size: 16px;
+  }
+.tab-title {
+    text-align: center;
+    color: red;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 10px 0 5px 0; /* molto compatto */
+}
+  textarea {
+    resize: vertical;
+    min-height: 90px;
+  }
+.version-box {
+    position: fixed;
+    top: 5px;
+    left: 5px;
+    background: #222;
+    color: #0f0;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-family: monospace;
+    font-size: 14px;
+    z-index: 9999;
+    opacity: 0.85;
+}
+  .pdf-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 10px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 12px;
+    text-align: center;
+  }
+
+  .pdf-image {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+</style>
+</head>
+
+<body>
+<div id="versione" class="version-box">v1.0.1e</div>
+<a class="home-button" href="https://balza1979.github.io/Elmi-Documenti/">Home</a>
+<h3 class="tab-title">SCHEDE ELMI</h3>
+<div class="tab-bar">
+  <button class="tab-button active" onclick="selezionaFoglio('errori', this)">ERRORI BETA-K</button>
+  <button class="tab-button" onclick="selezionaFoglio('stato', this)">STATI BETA-K</button>
+</div>
+
+<h3 class="tab-title">ALTRI DISPOSITIVI</h3>
+<div class="tab-bar">
+  <button class="tab-button" onclick="selezionaFoglio('situazione', this)">SITUAZIONE IMPIANTO</button>
+  <button class="tab-button" onclick="selezionaFoglio('lm2a_errori', this)">FUJI_LM2A</button>
+  <button class="tab-button" onclick="selezionaFoglio('Nxp_errori', this)">VACON_NXP</button>
+</div>
+ 
+<div class="container">
+
+  <!-- 1️⃣ MENU IN CIMA -->
+  <label style="color:white; font-size:20px;">Seleziona errore:</label>
+  <select id="menu"></select>
+
+<!-- 🔥 PULSANTI MANUALI DEVONO STARE QUI -->
+  <div id="manuali-container" style="margin-top: 20px; text-align:center;"></div>
+
+  <!-- 2️⃣ TITOLO DESCRIZIONE -->
+  <label id="labelA_det" style="margin-top:20px;">Descrizione errore</label>
+
+  <!-- 3️⃣ TESTO DESCRIZIONE -->
+  <textarea id="menuDettaglio" readonly></textarea>
+
+  <!-- 4️⃣ SUGGERIMENTO 1 -->
+  <label id="labelB"></label>
+  <textarea id="campoB" readonly></textarea>
+
+  <!-- 5️⃣ SUGGERIMENTO 2 -->
+  <label id="labelC"></label>
+  <textarea id="campoC" readonly></textarea>
+
+  <!-- 6️⃣ SUGGERIMENTO 3 -->
+  <label id="labelD"></label>
+  <textarea id="campoD" readonly></textarea>
+
+
+
+</div>
+
+
+
+<script>
+let workbookCache = null;
+
+async function loadWorkbook() {
+  if (workbookCache) return workbookCache;
+  const file = await fetch("errori.xlsx");
+  const arrayBuffer = await file.arrayBuffer();
+  workbookCache = XLSX.read(arrayBuffer, { type: "array" });
+  return workbookCache;
+}
+
+async function caricaExcel(nomeFoglio) {
+  const workbook = await loadWorkbook();
+  const sheet = workbook.Sheets[nomeFoglio];
+
+  if (!sheet) {
+    alert("❌ Foglio '" + nomeFoglio + "' non trovato!");
+    return;
+  }
+
+  const dati = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+  const intestazioni = dati[0];
+  const righe = dati.slice(1);
+
+document.getElementById("labelA_det").textContent = intestazioni[0] || "";
+document.getElementById("labelB").textContent = intestazioni[1] || "";
+document.getElementById("labelC").textContent = intestazioni[2] || "";
+document.getElementById("labelD").textContent = intestazioni[3] || "";
+  const menu = document.getElementById("menu");
+  menu.innerHTML = "";
+
+  righe.forEach((riga, index) => {
+    const opt = document.createElement("option");
+    opt.value = index;
+    opt.textContent = riga[0];
+    menu.appendChild(opt);
+  });
+
+menu.onchange = () => {
+    window.r = righe[menu.value];  // <---- AGGIUNTO
+    const r = window.r;
+``
+
+    document.getElementById("menuDettaglio").value = menu.options[menu.selectedIndex].text;
+
+    document.getElementById("campoB").value = r[1] || "";
+    document.getElementById("campoC").value = r[2] || "";
+    document.getElementById("campoD").value = r[3] || "";
+
+    const manualiDiv = document.getElementById("manuali-container");
+    manualiDiv.innerHTML = "";
+
+    const colonneManuali = [13, 14, 15, 16, 17, 18, 19, 20];
+
+    colonneManuali.forEach((colIndex) => {
+      let cella = r[colIndex];
+      if (!cella || cella.trim() === "" || cella.trim() === "/") return;
+
+      // Rimuove < e >
+// cella = cella.replace(/[<>]/g, "");
+
+      cella = cella.replace(/[\u200B-\u200D\uFEFF]/g, "").trim();
+
+      let nomePulito = "";
+      let linkDaAprire = "";
+
+      if (cella.includes("###")) {
+        const parti = cella.split("###");
+        nomePulito = parti[0].trim();
+        linkDaAprire = parti[1].trim().replace(/[\r\n]+/g, "");
+      } else {
+        nomePulito = cella.replace(/\.[^/.]+$/, "");
+        linkDaAprire = "pdfManualiErrori/" + cella;
+      }
+
+      const btn = document.createElement("button");
+      btn.textContent = nomePulito;
+      btn.style.margin = "5px";
+      btn.style.padding = "10px 20px";
+      btn.style.borderRadius = "8px";
+      btn.style.cursor = "pointer";
+      btn.style.fontWeight = "bold";
+      btn.onclick = () => window.open(linkDaAprire, "_blank");
+
+      manualiDiv.appendChild(btn);
+    });
+  };
+
+  menu.dispatchEvent(new Event("change"));
+}
+
+function selezionaFoglio(nomeFoglio, bottone) {
+  document.querySelectorAll(".tab-button").forEach(btn => btn.classList.remove("active"));
+  bottone.classList.add("active");
+  caricaExcel(nomeFoglio);
+}
+
+caricaExcel("errori");
+</script>
+</body>
+</html>
