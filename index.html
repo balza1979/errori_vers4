@@ -18,6 +18,48 @@
     background-repeat: no-repeat;
     font-family: Arial, sans-serif;
   }
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.85);
+  z-index: 999999;
+  padding: 20px;
+}
+
+.modal-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#modalText {
+  flex: 1;
+  width: 100%;
+  font-size: 22px;
+  padding: 20px;
+  border-radius: 8px;
+  resize: none;
+  background: #fff;
+}
+
+.close-btn {
+  background: #d9534f;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  font-size: 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+.close-btn:hover {
+  background: #c9302c;
+}
 
   .home-button {
     position: fixed;
@@ -146,7 +188,7 @@
 </head>
 
 <body>
-<div id="versione" class="version-box">v1.0.1e</div>
+<div id="versione" class="version-box">v1.0.4A</div>
 <a class="home-button" href="https://balza1979.github.io/Elmi-Documenti/">Home</a>
 <h3 class="tab-title">SCHEDE ELMI</h3>
 <div class="tab-bar">
@@ -292,6 +334,35 @@ function selezionaFoglio(nomeFoglio, bottone) {
 }
 
 caricaExcel("errori");
+// 🔥 MODALE FULLSCREEN
+const modal = document.getElementById("modal");
+const modalText = document.getElementById("modalText");
+const chiudiModal = document.getElementById("chiudiModal");
+
+// Chiudi cliccando sul bottone
+chiudiModal.onclick = () => modal.style.display = "none";
+
+// Chiudi cliccando fuori dalla modale
+modal.onclick = e => { 
+  if (e.target === modal) modal.style.display = "none"; 
+};
+
+// Apre la modale quando clicchi un campo
+["menuDettaglio", "campoB", "campoC", "campoD"].forEach(id => {
+  document.getElementById(id).onclick = function() {
+    modalText.value = this.value;
+    modal.style.display = "block";
+  };
+});
+
+  
 </script>
+  <!-- 🔥 MODALE FULLSCREEN PER LE DESCRIZIONI -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <button id="chiudiModal" class="close-btn">CHIUDI</button>
+    <textarea id="modalText" readonly></textarea>
+  </div>
+</div>
 </body>
 </html>
