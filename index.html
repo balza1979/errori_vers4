@@ -27,24 +27,33 @@
   height: 100%;
   background: rgba(0,0,0,0.85);
   z-index: 999999;
-  padding: 20px;
+  padding: 0;
+  overflow: hidden;   /* evita fuoriuscite */
 }
 
 .modal-content {
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 90%;
+  max-width: 800px;
+  height: 80%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 #modalText {
   flex: 1;
   width: 100%;
-  font-size: 22px;
-  padding: 20px;
-  border-radius: 8px;
+  font-size: 18px;
+  padding: 15px;
+  border: none;
   resize: none;
-  background: #fff;
+  overflow-y: auto;    /* scroll interno */
 }
 
 .close-btn {
@@ -53,9 +62,8 @@
   padding: 12px 20px;
   border: none;
   font-size: 20px;
-  border-radius: 6px;
+  border-radius: 6px 6px 0 0;
   cursor: pointer;
-  margin-bottom: 15px;
 }
 .close-btn:hover {
   background: #c9302c;
