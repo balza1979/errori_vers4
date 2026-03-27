@@ -260,10 +260,11 @@ async function caricaExcel(nomeFoglio) {
   const intestazioni = dati[0];
   const righe = dati.slice(1);
 
-document.getElementById("labelA_det").textContent = intestazioni[0] || "";
-document.getElementById("labelB").textContent = intestazioni[1] || "";
-document.getElementById("labelC").textContent = intestazioni[2] || "";
-document.getElementById("labelD").textContent = intestazioni[3] || "";
+  document.getElementById("labelA_det").textContent = intestazioni[0] || "";
+  document.getElementById("labelB").textContent = intestazioni[1] || "";
+  document.getElementById("labelC").textContent = intestazioni[2] || "";
+  document.getElementById("labelD").textContent = intestazioni[3] || "";
+
   const menu = document.getElementById("menu");
   menu.innerHTML = "";
 
@@ -274,12 +275,10 @@ document.getElementById("labelD").textContent = intestazioni[3] || "";
     menu.appendChild(opt);
   });
 
-menu.onchange = () => {
-    window.r = righe[menu.value];  
-    const r = window.r;
+  menu.onchange = () => {
+    const r = righe[menu.value];
 
     document.getElementById("menuDettaglio").value = menu.options[menu.selectedIndex].text;
-
     document.getElementById("campoB").value = r[1] || "";
     document.getElementById("campoC").value = r[2] || "";
     document.getElementById("campoD").value = r[3] || "";
@@ -289,12 +288,9 @@ menu.onchange = () => {
 
     const colonneManuali = [13, 14, 15, 16, 17, 18, 19, 20];
 
-    colonneManuali.forEach((colIndex) => {
+    colonneManuali.forEach(colIndex => {
       let cella = r[colIndex];
       if (!cella || cella.trim() === "" || cella.trim() === "/") return;
-
-      // Rimuove < e >
-// cella = cella.replace(/[<>]/g, "");
 
       cella = cella.replace(/[\u200B-\u200D\uFEFF]/g, "").trim();
 
@@ -332,7 +328,10 @@ function selezionaFoglio(nomeFoglio, bottone) {
   caricaExcel(nomeFoglio);
 }
 
-<!-- ⚡ MODALE HTML - DEVE ESSERE PRIMA DELLO SCRIPT -->
+caricaExcel("errori");
+</script>
+
+<!-- 🔥 MODALE HTML -->
 <div id="modal" class="modal">
   <div class="modal-content">
     <button id="chiudiModal" class="close-btn">CHIUDI</button>
@@ -341,31 +340,20 @@ function selezionaFoglio(nomeFoglio, bottone) {
 </div>
 
 <script>
-function selezionaFoglio(nomeFoglio, bottone) {
-  document.querySelectorAll(".tab-button").forEach(btn => btn.classList.remove("active"));
-  bottone.classList.add("active");
-  caricaExcel(nomeFoglio);
-}
-
-caricaExcel("errori");
-
-// 🔥 MODALE FULLSCREEN — ORA FUNZIONA PERCHÈ È DOPO L’HTML DELLA MODALE
+// 🔥 MODALE FULLSCREEN
 const modal = document.getElementById("modal");
 const modalText = document.getElementById("modalText");
 const chiudiModal = document.getElementById("chiudiModal");
 
-// Chiudi cliccando sul bottone
 chiudiModal.onclick = () => modal.style.display = "none";
 
-// Chiudi cliccando fuori dalla modale
-modal.onclick = e => { 
-  if (e.target === modal) modal.style.display = "none"; 
+modal.onclick = e => {
+  if (e.target === modal) modal.style.display = "none";
 };
 
-// Apre la modale quando clicchi un campo
 ["menuDettaglio", "campoB", "campoC", "campoD"].forEach(id => {
   const el = document.getElementById(id);
-  if (!el) return; // Evita errori se un ID non esiste
+  if (!el) return;
   el.onclick = function() {
     modalText.value = this.value;
     modal.style.display = "block";
