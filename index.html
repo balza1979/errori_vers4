@@ -203,7 +203,7 @@
 </head>
 
 <body>
-<div id="versione" class="version-box">v1.0.4c</div>
+<div id="versione" class="version-box">v1.0.4d</div>
 <a class="home-button" href="https://balza1979.github.io/Elmi-Documenti/">Home</a>
 <h3 class="tab-title">SCHEDE ELMI</h3>
 <div class="tab-bar">
@@ -225,8 +225,7 @@
   
 
   <!-- 1️⃣ MENU IN CIMA -->
-<label id="titoloErrore" style="color:white; font-size:20px;">Seleziona in:</label>
-  
+<label id="titoloErrore" style="color:white; font-size:20px;">Descrizione errore:</label>
   <select id="menu"> </select>
 
 <!-- 🔥 PULSANTI MANUALI DEVONO STARE QUI -->
@@ -343,9 +342,17 @@ async function caricaExcel(nomeFoglio) {
 }
 
 function selezionaFoglio(nomeFoglio, bottone) {
-  document.querySelectorAll(".tab-button").forEach(btn => btn.classList.remove("active"));
-  bottone.classList.add("active");
-  caricaExcel(nomeFoglio);
+
+    // Evidenzia pulsante attivo
+    document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+    bottone.classList.add('active');
+
+    // 🔥 Imposta la label usando il testo del bottone premuto
+    document.getElementById("titoloErrore").textContent =
+        "Descrizione errore: " + bottone.textContent;
+
+    // Carica il foglio Excel
+    caricaExcel(nomeFoglio);
 }
 
 caricaExcel("errori");
