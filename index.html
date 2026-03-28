@@ -223,7 +223,7 @@
 <div class="container">
 
   <!-- 1️⃣ MENU IN CIMA -->
-<label style="color:white; font-size:20px;">Seleziona errore:</label> 
+<label id="titoloErrore" style="color:white; font-size:20px;">Descrizione errore:</label>
   <div id="contenitoreMenu"></div>
   <select id="menu"> </select>
 
@@ -380,13 +380,7 @@ modal.onclick = e => {
 </script>
 <script>
 function selezionaFoglio(nomeFoglio, bottone) {
-
-    // 1️⃣ Evidenzia il pulsante attivo
-    document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
-    bottone.classList.add('active');
-
-    // 2️⃣ Carica il foglio Excel
-    caricaExcel(nomeFoglio);
+document.getElementById("titoloErrore").textContent = "Descrizione errore: " + nomeFoglio;;
 
     // 3️⃣ Genera le opzioni del menu
     let opzioni = [];
