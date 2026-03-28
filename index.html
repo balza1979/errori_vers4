@@ -223,8 +223,8 @@
 <div class="container">
 
   <!-- 1️⃣ MENU IN CIMA -->
-<label style="color:white; font-size:20px;">Seleziona errore:</label> xxxxxxxxx
-
+<label style="color:white; font-size:20px;">Seleziona errore:</label> 
+  <div id="contenitoreMenu"></div>
   <select id="menu"> </select>
 
 <!-- 🔥 PULSANTI MANUALI DEVONO STARE QUI -->
@@ -380,41 +380,35 @@ modal.onclick = e => {
 </script>
 <script>
 function selezionaFoglio(nomeFoglio, bottone) {
+
+    // 1️⃣ Evidenzia il pulsante attivo
     document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
     bottone.classList.add('active');
 
+    // 2️⃣ Carica il foglio Excel
+    caricaExcel(nomeFoglio);
+
+    // 3️⃣ Genera le opzioni del menu
     let opzioni = [];
 
-    if (nomeFoglio === 'errori') {
-        opzioni = ['Errore 1', 'Errore 2', 'Errore 3'];
-    }
+    if (nomeFoglio === 'errori') opzioni = ['Errore 1', 'Errore 2', 'Errore 3'];
+    if (nomeFoglio === 'stato') opzioni = ['Stato A', 'Stato B', 'Stato C'];
+    if (nomeFoglio === 'lm2a_errori') opzioni = ['LM2A - 01', 'LM2A - 02'];
+    if (nomeFoglio === 'Nxp_errori') opzioni = ['NXP - 01', 'NXP - 02'];
+    if (nomeFoglio === 'situazione') opzioni = ['Situazione 1', 'Situazione 2'];
 
-    if (nomeFoglio === 'stato') {
-        opzioni = ['Stato A', 'Stato B', 'Stato C'];
-    }
-
-    if (nomeFoglio === 'lm2a_errori') {
-        opzioni = ['LM2A - 01', 'LM2A - 02'];
-    }
-
-    if (nomeFoglio === 'Nxp_errori') {
-        opzioni = ['NXP - 01', 'NXP - 02'];
-    }
-
-    if (nomeFoglio === 'situazione') {
-        opzioni = ['Situazione 1', 'Situazione 2'];
-    }
-
-    // Genera il select
+    // 4️⃣ Crea il select
     let html = `<select id="menu">`;
-    opzioni.forEach(o => {
-        html += `<option>${o}</option>`;
-    });
+    opzioni.forEach(o => html += `<option>${o}</option>`);
     html += `</select>`;
 
-    // Inserisce il select nel punto desiderato
+    // 5️⃣ Inserisce il select nel contenitore
     document.getElementById('contenitoreMenu').innerHTML = html;
 }
+
+// Carica il foglio iniziale
+caricaExcel("errori");
+
 </script>
 </body>
 </html>
