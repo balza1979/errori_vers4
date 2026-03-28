@@ -203,7 +203,7 @@
 </head>
 
 <body>
-<div id="versione" class="version-box">v1.0.4d</div>
+<div id="versione" class="version-box">v1.0.4e</div>
 <a class="home-button" href="https://balza1979.github.io/Elmi-Documenti/">Home</a>
 <h3 class="tab-title">SCHEDE ELMI</h3>
 <div class="tab-bar">
@@ -349,7 +349,7 @@ function selezionaFoglio(nomeFoglio, bottone) {
 
     // 🔥 Imposta la label usando il testo del bottone premuto
     document.getElementById("titoloErrore").textContent =
-        "Descrizione errore: " + bottone.textContent;
+        "Seleziona in: " + bottone.textContent;
 
     // Carica il foglio Excel
     caricaExcel(nomeFoglio);
