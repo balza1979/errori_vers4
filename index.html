@@ -380,11 +380,9 @@ modal.onclick = e => {
 </script>
 <script>
 function selezionaFoglio(nomeFoglio, bottone) {
-    // Rimuove lo stato "active" da tutti i pulsanti
     document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
     bottone.classList.add('active');
 
-    // Qui decidi quali opzioni mostrare
     let opzioni = [];
 
     if (nomeFoglio === 'errori') {
@@ -420,3 +418,4 @@ function selezionaFoglio(nomeFoglio, bottone) {
 </script>
 </body>
 </html>
+
