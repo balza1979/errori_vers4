@@ -356,6 +356,9 @@ function selezionaFoglio(nomeFoglio, bottone) {
 }
 
 caricaExcel("errori");
+  // Imposta la label iniziale come il primo pulsante
+document.getElementById("titoloErrore").textContent =
+    "Descrizione errore: " + document.querySelector(".tab-button").textContent;
 </script>
 
 <!-- 🔥 MODALE HTML -->
